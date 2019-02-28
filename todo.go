@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/matteo107/go-echo-vue/handlers"
 	_ "github.com/mattn/go-sqlite3"
-	"go-echo-vue/handlers"
 )
 
 func main() {
@@ -24,8 +24,8 @@ func main() {
 	e.GET("/", func(c echo.Context) error { return c.JSON(200, "Hello") })
 
 	e.GET("/tasks", handlers.GetTasks(db))
-	e.PUT("/tasks", func(c echo.Context) error { return c.JSON(200, "PUT Tasks") })
-	e.DELETE("/tasks/:id", func(c echo.Context) error { return c.JSON(200, "DELETE Task "+c.Param("id")) })
+	e.PUT("/tasks", handlers.PutTask(db))
+	e.DELETE("/tasks/:id", handlers.DeleteTask(db))
 	// Start server
 	e.Logger.Fatal(e.Start(":8000"))
 
