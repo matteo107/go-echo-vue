@@ -5,6 +5,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	_ "github.com/mattn/go-sqlite3"
+	"go-echo-vue/handlers"
 )
 
 func main() {
@@ -22,7 +23,7 @@ func main() {
 	// Routes
 	e.GET("/", func(c echo.Context) error { return c.JSON(200, "Hello") })
 
-	e.GET("/tasks", func(c echo.Context) error { return c.JSON(200, "GET Tasks") })
+	e.GET("/tasks", handlers.GetTasks(db))
 	e.PUT("/tasks", func(c echo.Context) error { return c.JSON(200, "PUT Tasks") })
 	e.DELETE("/tasks/:id", func(c echo.Context) error { return c.JSON(200, "DELETE Task "+c.Param("id")) })
 	// Start server
