@@ -25,8 +25,8 @@ func main() {
 	e.Use(middleware.Recover())
 
 	// Routes
-	e.GET("/", func(c echo.Context) error { return c.JSON(200, "Hello") })
 
+	e.File("/", "public/index.html")
 	e.GET("/tasks", handlers.GetTasks(db))
 	e.PUT("/tasks", handlers.PutTask(db))
 	e.DELETE("/tasks/:id", handlers.DeleteTask(db))
