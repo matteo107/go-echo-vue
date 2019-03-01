@@ -15,6 +15,8 @@ func main() {
 
 	// Echo instance
 	e := echo.New()
+	e.HideBanner = true
+	e.Logger.SetLevel(99)
 
 	// Middleware
 	e.Use(middleware.BodyDump(func(c echo.Context, reqBody, resBody []byte) {

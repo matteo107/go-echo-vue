@@ -3,13 +3,14 @@ package models
 import (
 	"database/sql"
 
+	"github.com/labstack/gommon/log"
 	_ "github.com/mattn/go-sqlite3"
 )
 
 // struct Task
 type Task struct {
-	Name string `json:"name"`
 	ID   int    `json:"id"`
+	Name string `json:"name"`
 }
 
 // TaskCollection is collection of Tasks
@@ -43,7 +44,7 @@ func GetTasks(db *sql.DB) TaskCollection {
 
 // PutTask add a new task
 func PutTask(db *sql.DB, name string) (int64, error) {
-
+	log.Debug("Created name", name)
 	sql := "INSERT INTO tasks(name) VALUES(?)"
 
 	// Create a prepared SQL statement

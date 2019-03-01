@@ -3,6 +3,7 @@ package handlers
 
 import (
 	"database/sql"
+	"github.com/labstack/gommon/log"
 	"net/http"
 	"strconv"
 
@@ -25,12 +26,18 @@ func PutTask(db *sql.DB) echo.HandlerFunc {
 		// Instantiate a new task
 		var task models.Task
 		// Map imcoming JSON body to the new Task
-		c.Bind(&task)
+		err := c.Bind(&task)
+		if err != nil {
+			log.Printf("Failed processing PutTask request: %s\n", err)
+			return echo.NewHTTPError(http.StatusInternalServerError)
+		}
 
 		// Add a task using our new model
 		id, err := models.PutTask(db, task.Name)
+
 		// Return a JSON response if successful
 		if err == nil {
+			log.Printf("This is your task: %#v\n", task)
 			return c.JSON(http.StatusCreated, H{
 				"created": id,
 			})
