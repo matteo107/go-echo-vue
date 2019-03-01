@@ -17,6 +17,8 @@ func main() {
 	e := echo.New()
 
 	// Middleware
+	e.Use(middleware.BodyDump(func(c echo.Context, reqBody, resBody []byte) {
+	}))
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
