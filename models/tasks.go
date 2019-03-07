@@ -86,3 +86,24 @@ func DeleteTask(db *sql.DB, id int) (int64, error) {
 
 	return result.RowsAffected()
 }
+
+// DeleteTasks removes all task
+func DeleteTasks(db *sql.DB) (int64, error) {
+	sql := "DELETE FROM tasks"
+
+	// Create a prepared SQL statement
+	stmt, err := db.Prepare(sql)
+	// Exit if we get an error
+	if err != nil {
+		panic(err)
+	}
+
+	// Replace the '?' in our prepared statement with 'id'
+	result, err2 := stmt.Exec()
+	// Exit if we get an error
+	if err2 != nil {
+		panic(err2)
+	}
+
+	return result.RowsAffected()
+}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/matteo107/go-echo-vue/handlers"
@@ -30,6 +31,7 @@ func main() {
 	e.GET("/tasks", handlers.GetTasks(db))
 	e.PUT("/tasks", handlers.PutTask(db))
 	e.DELETE("/tasks/:id", handlers.DeleteTask(db))
+	e.DELETE("/tasks", handlers.DeleteTasks(db))
 	// Start server
 	e.Logger.Fatal(e.Start(":8000"))
 

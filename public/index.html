@@ -47,6 +47,11 @@
                             <button class="btn btn-primary" type="button" v-on:click="createTask">Create</button>
                         </span>
                     </div><!-- /input-group -->
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="button" v-on:click="deleteTasks">Delete All</button>
+                        </span>
+                    </div><!-- /input-group -->
                 </div>
             </div>
         </div>
@@ -91,6 +96,15 @@
                         this.$http.delete('/tasks/' + this.tasks[index].id).success(function(response) {
                             this.tasks.splice(index, 1)
                             console.log("Task deleted!")
+                        }).error(function(error) {
+                            console.log(error)
+                        })
+                    },
+
+                    deleteTasks: function(index) {
+            // Use the $http client to delete a task by its id
+                        this.$http.delete('/tasks/').success(function(response) {                            
+                            console.log("Tasks deleted!")
                         }).error(function(error) {
                             console.log(error)
                         })

@@ -3,9 +3,10 @@ package handlers
 
 import (
 	"database/sql"
-	"github.com/labstack/gommon/log"
 	"net/http"
 	"strconv"
+
+	"github.com/labstack/gommon/log"
 
 	"github.com/labstack/echo/v4"
 	"github.com/matteo107/go-echo-vue/models"
@@ -57,6 +58,22 @@ func DeleteTask(db *sql.DB) echo.HandlerFunc {
 		if err == nil {
 			return c.JSON(http.StatusOK, H{
 				"deleted": id,
+			})
+			// Handle errors
+		} else {
+			return err
+		}
+	}
+}
+
+// DeleteTask endpoint
+func DeleteTasks(db *sql.DB) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		_, err := models.DeleteTasks(db)
+		// Return a JSON response on success
+		if err == nil {
+			return c.JSON(http.StatusOK, H{
+				"deleted": "all",
 			})
 			// Handle errors
 		} else {
